@@ -36,11 +36,9 @@ jobs:
     steps:
 
     - name: 'Az CLI login'
-      uses: azure/login@v1.4.3
+      uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{ secrets.AZURE_SECRET }}
 
     - name: 'Run Azure CLI commands'
       run: |
