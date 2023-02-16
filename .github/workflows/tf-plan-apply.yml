@@ -37,7 +37,7 @@ jobs:
     steps:
 
     - name: 'Az CLI login'
-      //uses: azure/login@v1.4.3
+#      uses: azure/login@v1.4.3
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
