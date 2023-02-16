@@ -24,6 +24,7 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
+    environment: Test
     defaults:
       run:
         working-directory: ./samples
@@ -36,7 +37,7 @@ jobs:
     steps:
 
     - name: 'Az CLI login'
-      uses: azure/actions/login@v1
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_SECRET }}
 
