@@ -1,6 +1,3 @@
-[![Terraform Unit Tests](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml/badge.svg)](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml)
-[![Terraform Plan/Apply](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml/badge.svg)](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml)
-
 <!-- BEGIN_TF_DOCS -->
 
 
@@ -33,29 +30,24 @@ module "primary_namespace" {
   capacity            = 15
 
   authorized_ips_or_cidr_blocks = ["103.59.73.254"]
-  authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
+  //authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
 
-  disaster_recovery_config = {
-    dr_enabled           = true
-    partner_namespace_id = module.secondary_namespace.id
-  }
+  hubs = [
+    {
+      partitions        = 5
+      message_retention = 2
+    },
+    {
+      partitions        = 8
+      message_retention = 1
+    },
+  ]
 
-  depends_on = [module.secondary_namespace]
-}
+  private_endpoint = [azurerm_subnet.snet.id, ]
 
-module "secondary_namespace" {
-  source = "../module"
-
-  location            = local.secondary_location
-  resource_group_name = azurerm_resource_group.group.name
-  workload_name       = "secondary-ns"
-  sku                 = "Standard"
-  capacity            = 15
-
-  authorized_ips_or_cidr_blocks = ["103.59.73.254"]
-  authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
 }
 ```
+### For a complete deployment example, please check [sample folder](/samples).
 </details>
 
 ## Inputs
@@ -66,8 +58,10 @@ module "secondary_namespace" {
 | <a name="input_authorized_vnet_subnet_ids"></a> [authorized\_vnet\_subnet\_ids](#input\_authorized\_vnet\_subnet\_ids) | IDs of the virtual network subnets authorized to connect to the Eventhub Namespace. | `list(string)` | `[]` | no |
 | <a name="input_capacity"></a> [capacity](#input\_capacity) | Specifies the Capacity / Throughput Units. Maximum value could be 20. | `number` | n/a | yes |
 | <a name="input_disaster_recovery_config"></a> [disaster\_recovery\_config](#input\_disaster\_recovery\_config) | Specifies disaster recovery configuration. This block requires the following inputs:<br> - `dr_enabled`: If Geo-Recovery needs to be enabled?<br> - `partner_namespace_id` The ID of the EventHub Namespace to replicate to. | <pre>object({<br>    dr_enabled           = bool<br>    partner_namespace_id = string<br>  })</pre> | <pre>{<br>  "dr_enabled": false,<br>  "partner_namespace_id": ""<br>}</pre> | no |
+| <a name="input_hubs"></a> [hubs](#input\_hubs) | A list of event hubs to add to the namespace. | <pre>list(object({<br>    partitions        = number<br>    message_retention = number<br>  }))</pre> | `[]` | no |
 | <a name="input_location"></a> [location](#input\_location) | Specifies the supported Azure location where the resource exists. | `string` | n/a | yes |
 | <a name="input_maximum_throughput_units"></a> [maximum\_throughput\_units](#input\_maximum\_throughput\_units) | Specifies the maximum number of throughput units when Auto Inflate is Enabled. Valid values range from 1 - 20. This  option will enable 'Auto Inflate' capability of Eventhub namespace' | `number` | `null` | no |
+| <a name="input_private_endpoint"></a> [private\_endpoint](#input\_private\_endpoint) | Specifies the private endpoint details for EventHub Namespace. List of  subnet IDs to use for the private endpoint of the EventHub Namespace. | `list(string)` | `[]` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The resource group where to deploy the EventHub Namespace. | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | Defines which tier to use. Valid options are Basic or Standard. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags for the Azure EventHub Namespace. | `map(string)` | `{}` | no |
@@ -88,12 +82,16 @@ module "secondary_namespace" {
 
 | Name | Type |
 |------|------|
+| [azurerm_eventhub.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub) | resource |
 | [azurerm_eventhub_namespace.ehn](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub_namespace) | resource |
 | [azurerm_eventhub_namespace_disaster_recovery_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub_namespace_disaster_recovery_config) | resource |
+| [azurerm_private_endpoint.private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) | resource |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | n/a |
+
+
 <!-- END_TF_DOCS -->
