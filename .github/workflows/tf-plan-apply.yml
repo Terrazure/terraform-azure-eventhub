@@ -16,9 +16,9 @@ permissions:
 
 #These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
 env:
-  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
-  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
 
 jobs:
   terraform-plan:
@@ -27,7 +27,7 @@ jobs:
     environment: Azure
     defaults:
       run:
-        working-directory: ./samples
+        working-directory: samples
     env:
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
@@ -37,21 +37,14 @@ jobs:
     steps:
 
     - name: 'Az CLI login'
-      uses: azure/login@v1
+      uses: azure/login@v1.4.3
       with:
-#        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
         client-id: ${{ secrets.CLIENT_ID }}
         subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
         tenant-id: ${{ secrets.TENANT_ID }}
         enable-AzPSSession: false
         environment: azurecloud
         audience: api://AzureADTokenExchange
-
-    - name: 'Run Azure CLI commands'
-      run: |
-        az account show
-        az group list
-        pwd
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
