@@ -24,7 +24,7 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    environment: Test
+    environment: Azure
     defaults:
       run:
         working-directory: ./samples
@@ -37,14 +37,8 @@ jobs:
     steps:
 
     - name: 'Az CLI login'
-      uses: azure/login@v1.4.3
-#      uses: azure/actions/login@v1
       with:
-#        creds: ${{ secrets.AZURE_CREDS }}
-        
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
 
     - name: 'Run Azure CLI commands'
       run: |
@@ -140,7 +134,7 @@ jobs:
     name: 'Terraform Apply'
     if: github.ref == 'refs/heads/main' && needs.terraform-plan.outputs.tfplanExitCode == 2
     runs-on: ubuntu-latest
-    environment: Test
+    environment: Azure
     needs: [terraform-plan]
     
     steps:
