@@ -1,3 +1,6 @@
+[![Terraform Unit Tests](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml/badge.svg)](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml)
+[![Terraform Plan/Apply](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml/badge.svg)](https://github.com/pinakispecial/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml)
+
 <!-- BEGIN_TF_DOCS -->
 
 
