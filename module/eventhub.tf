@@ -1,3 +1,8 @@
+/**
+ * # Azure EventHub
+ *
+ */
+
 resource "azurerm_eventhub" "this" {
   count = length(var.hubs)
 

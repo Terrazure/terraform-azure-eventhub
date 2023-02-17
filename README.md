@@ -1,5 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+[![Terraform Unit Tests](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml/badge.svg)](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml)
+[![Terraform Plan/Apply](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml/badge.svg)](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml)
 
+# Azure EventHub
 
 ## Requirements
 
