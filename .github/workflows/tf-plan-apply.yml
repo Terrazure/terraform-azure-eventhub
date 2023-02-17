@@ -47,12 +47,6 @@ jobs:
         environment: azurecloud
         audience: api://AzureADTokenExchange
 
-    - name: 'Run Azure CLI commands'
-      run: |
-        az account show
-        az group list
-        pwd
-
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
