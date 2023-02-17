@@ -87,7 +87,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: tfplan
-        path: /home/runner/work/terraform-azure-eventhub/terraform-azure-eventhub/
+        path: ./samples/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
