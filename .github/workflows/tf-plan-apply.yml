@@ -39,8 +39,13 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
-
+#        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+        client-id: ${{ secrets.CLIENT_ID }}
+        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        enable-AzPSSession: false
+        environment: azurecloud
+        audience: api://AzureADTokenExchange
 
     - name: 'Run Azure CLI commands'
       run: |
