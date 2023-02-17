@@ -28,7 +28,7 @@ jobs:
     environment: Azure
     defaults:
       run:
-        working-directory: ./samples
+        working-directory: samples
     env:
       #this is needed since we are running terraform with read-only permissions
       ARM_SKIP_PROVIDER_REGISTRATION: true
@@ -40,7 +40,6 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1.4.3
       with:
-#        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
         client-id: ${{ secrets.CLIENT_ID }}
         subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
         tenant-id: ${{ secrets.TENANT_ID }}
