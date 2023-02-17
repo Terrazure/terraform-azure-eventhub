@@ -114,25 +114,25 @@ jobs:
         echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
       
     # If this is a PR post the changes
-    - name: Push Terraform Output to PR
-      if: github.ref != 'refs/heads/main'
-      uses: actions/github-script@v6
-      env:
-        SUMMARY: "${{ steps.tf-plan-string.outputs.summary }}"
-      with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const body = `${process.env.SUMMARY}`;
-            github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: body
-            })
+#    - name: Push Terraform Output to PR
+#      if: github.ref != 'refs/heads/main'
+#      uses: actions/github-script@v6
+#      env:
+#        SUMMARY: "${{ steps.tf-plan-string.outputs.summary }}"
+#      with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const body = `${process.env.SUMMARY}`;
+#            github.rest.issues.createComment({
+#                issue_number: context.issue.number,
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                body: body
+#            })
                 
   terraform-apply:
     name: 'Terraform Apply'
-#    if: github.ref == 'refs/heads/main' && needs.terraform-plan.outputs.tfplanExitCode == 2
+    if:  needs.terraform-plan.outputs.tfplanExitCode == 2 #github.ref == 'refs/heads/main' &&
     runs-on: ubuntu-latest
     environment: Azure
     needs: [terraform-plan]
