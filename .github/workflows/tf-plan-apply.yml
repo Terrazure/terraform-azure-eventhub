@@ -35,7 +35,6 @@ jobs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
 
     steps:
-
     - name: 'Az CLI login'
       uses: azure/login@v1.4.3
       with:
@@ -159,6 +158,16 @@ jobs:
       with:
         name: tfplan
         path: ./samples/
+
+    - name: 'Az CLI login'
+      uses: azure/login@v1.4.3
+      with:
+        client-id: ${{ secrets.CLIENT_ID }}
+        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        enable-AzPSSession: false
+        environment: azurecloud
+        audience: api://AzureADTokenExchange
 
     # Terraform Apply
     - name: Terraform Apply
