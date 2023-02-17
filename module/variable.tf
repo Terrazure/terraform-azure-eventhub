@@ -73,8 +73,23 @@ variable "disaster_recovery_config" {
   }
 }
 
+variable "private_endpoint" {
+  type        = list(string)
+  description = "Specifies the private endpoint details for EventHub Namespace. List of  subnet IDs to use for the private endpoint of the EventHub Namespace."
+  default     = []
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags for the Azure EventHub Namespace."
   default     = {}
+}
+
+variable "hubs" {
+  description = "A list of event hubs to add to the namespace."
+  type = list(object({
+    partitions        = number
+    message_retention = number
+  }))
+  default = []
 }

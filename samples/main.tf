@@ -8,25 +8,19 @@ module "primary_namespace" {
   capacity            = 15
 
   authorized_ips_or_cidr_blocks = ["103.59.73.254"]
-  authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
+  //authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
 
-  disaster_recovery_config = {
-    dr_enabled           = true
-    partner_namespace_id = module.secondary_namespace.id
-  }
+  hubs = [
+    {
+      partitions        = 5
+      message_retention = 2
+    },
+    {
+      partitions        = 8
+      message_retention = 1
+    },
+  ]
 
-  depends_on = [module.secondary_namespace]
-}
+  private_endpoint = [azurerm_subnet.snet.id, ]
 
-module "secondary_namespace" {
-  source = "../module"
-
-  location            = local.secondary_location
-  resource_group_name = azurerm_resource_group.group.name
-  workload_name       = "secondary-ns"
-  sku                 = "Standard"
-  capacity            = 15
-
-  authorized_ips_or_cidr_blocks = ["103.59.73.254"]
-  authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
 }
