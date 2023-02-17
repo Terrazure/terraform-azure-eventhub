@@ -136,6 +136,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Azure
     needs: [terraform-plan]
+    defaults:
+      run:
+        working-directory: samples
     
     steps:
     # Checkout the repository to the GitHub Actions runner
