@@ -4,13 +4,6 @@
 <!-- BEGIN_TF_DOCS -->
 
 
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.0.1 |
-
 ## Providers
 
 | Name | Version |
@@ -24,7 +17,7 @@
 
 ```hcl
 module "primary_namespace" {
-  source = "../module"
+  source = "../"
 
   location            = local.primary_location
   resource_group_name = azurerm_resource_group.group.name
@@ -44,7 +37,7 @@ module "primary_namespace" {
 }
 
 module "secondary_namespace" {
-  source = "../module"
+  source = "../"
 
   location            = local.secondary_location
   resource_group_name = azurerm_resource_group.group.name
