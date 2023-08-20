@@ -1,21 +1,18 @@
 <!-- BEGIN_TF_DOCS -->
+
+
 [![Terraform Unit Tests](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml/badge.svg)](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-unit-tests.yml)
 [![Terraform Plan/Apply](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml/badge.svg)](https://github.com/PinakiKundu/terraform-azure-eventhub/actions/workflows/tf-plan-apply.yml)
 
-# Azure EventHub
-
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.0.1 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.0.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
 
 ## Sample
 
@@ -24,7 +21,7 @@
 
 ```hcl
 module "primary_namespace" {
-  source = "../module"
+  source = "../"
 
   location            = local.primary_location
   resource_group_name = azurerm_resource_group.group.name
@@ -49,8 +46,20 @@ module "primary_namespace" {
   private_endpoint = [azurerm_subnet.snet.id, ]
 
 }
+
+module "secondary_namespace" {
+  source = "../"
+
+  location            = local.secondary_location
+  resource_group_name = azurerm_resource_group.group.name
+  workload_name       = "secondary-ns"
+  sku                 = "Standard"
+  capacity            = 15
+
+  authorized_ips_or_cidr_blocks = ["103.59.73.254"]
+  authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
+}
 ```
-### For a complete deployment example, please check [sample folder](/samples).
 </details>
 
 ## Inputs
@@ -88,13 +97,10 @@ module "primary_namespace" {
 | [azurerm_eventhub.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub) | resource |
 | [azurerm_eventhub_namespace.ehn](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub_namespace) | resource |
 | [azurerm_eventhub_namespace_disaster_recovery_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub_namespace_disaster_recovery_config) | resource |
-| [azurerm_private_endpoint.private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) | resource |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_naming"></a> [naming](#module\_naming) | Azure/naming/azurerm | n/a |
-
-
 <!-- END_TF_DOCS -->
