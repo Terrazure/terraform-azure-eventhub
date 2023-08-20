@@ -1,20 +1,16 @@
 package test
 
 import (
-	"context"
 	eventhub "github.com/Azure/azure-sdk-for-go/services/preview/eventhub/mgmt/2018-01-01-preview/eventhub"
+	helpers "github.com/Terrazure/terratest-helpers"
 	"testing"
-	"time"
 )
-
-func BuildDefaultHttpContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), 10*time.Minute)
-}
 
 func getEventHubNamespace(t *testing.T, subscriptionID, resourceGroupName, namespaceName string) eventhub.EHNamespace {
 	t.Helper()
 	client := eventhub.NewNamespacesClient(subscriptionID)
-	ctx, cancel := BuildDefaultHttpContext()
+	helpers.ConfigureAzureResourceClient(t, &client.Client)
+	ctx, cancel := helpers.BuildDefaultHttpContext()
 	defer cancel()
 	namespace, err := client.Get(ctx, resourceGroupName, namespaceName)
 
