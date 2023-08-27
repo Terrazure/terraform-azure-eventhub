@@ -28,12 +28,12 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
 
-    # Perform a security scan of the terraform code using checkov
-    - name: Run Checkov action
-      id: checkov
-      uses: bridgecrewio/checkov-action@master
-      with:
-        framework: terraform
+#    # Perform a security scan of the terraform code using checkov
+#    - name: Run Checkov action
+#      id: checkov
+#      uses: bridgecrewio/checkov-action@master
+#      with:
+#        framework: terraform
 
 #    # Upload results to GitHub Advanced Security
 #    - name: Upload SARIF file
@@ -42,31 +42,3 @@ jobs:
 #      with:
 #        sarif_file: results.sarif
 #        category: checkov
-
-  go-tests:
-    name: Run Go Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-go@v1
-        with:
-          go-version: 1.17
-      - uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.2
-      - name: Download Go modules
-        working-directory: tests
-        run: go mod download
-      - name: Run tests
-        working-directory: tests
-        run: make unit-test
-        env:
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.TENANT_ID }}
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          AZURE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-

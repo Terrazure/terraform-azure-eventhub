@@ -12,7 +12,7 @@ variable "capacity" {
 }
 
 locals {
-  location   = "eastus"
+  location = "eastus"
 }
 
 resource "azurerm_resource_group" "group" {
