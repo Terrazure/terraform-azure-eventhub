@@ -1,12 +1,6 @@
 name: 'Terraform Plan/Apply'
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+on: workflow_dispatch
 
 #Special permissions required for OIDC authentication
 permissions:
