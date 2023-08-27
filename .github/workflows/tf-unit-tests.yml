@@ -73,6 +73,13 @@ jobs:
           AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       - name: Run report
         working-directory: test
-        run: terratest_log_parser -testlog test_output.log -outputdir test_output
+        run: terratest_log_parser -testlog test_output.log -outputdir reports
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: Terratest
+          path: reports/report.xml
+          reporter: junit
 
 
