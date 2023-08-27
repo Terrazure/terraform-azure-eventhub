@@ -48,9 +48,11 @@ jobs:
       with:
         go-version: 1.19
     - name: Download Go modules
+      if: always()
       working-directory: test
       run: go mod download
     - name: Run tests
+      if: always()
       working-directory: test
       run: go test -v -parallel 10 -timeout 120m | tee test_output.log
       env:
