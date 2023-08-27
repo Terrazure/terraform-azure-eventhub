@@ -15,6 +15,8 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_wrapper: false
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
@@ -42,3 +44,18 @@ jobs:
 #      with:
 #        sarif_file: results.sarif
 #        category: checkov
+
+    - uses: actions/checkout@v1
+    - uses: actions/setup-go@v1
+      with:
+        go-version: 1.19
+    - name: Download Go Modules
+      working-directory: test
+      run: go mod download
+    - name: Run Go Tests
+      working-directory: test
+      run: go test -v -parallel 10 -timeout 120m
+      env:
+        ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
