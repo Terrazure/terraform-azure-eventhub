@@ -7,7 +7,7 @@ variable "capacity" { type = number }
 variable "zone_redundant" { type = bool }
 
 locals {
-  location   = "eastus"
+  location = "eastus"
 }
 
 data "azurerm_subscription" "current" {}
