@@ -54,32 +54,23 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.3.0
-      - name: Install Terratest log parser
-        run: go install github.com/gruntwork-io/terratest/cmd/terratest_log_parser@latest
-      - name: Download Go modules
-        working-directory: test
-        run: go mod download
-      - name: Run tests
-        working-directory: test
-        run: go test -v -parallel 10 -timeout 120m | tee test_output.log
-        env:
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.TENANT_ID }}
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          AZURE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      - name: Run report
-        working-directory: test
-        run: terratest_log_parser -testlog test_output.log -outputdir reports
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()    # run this step even if previous step failed
+
+      - name: Run Terratest
+        uses: cloudposse/github-action-terratest@main
         with:
-          name: Terratest
-          path: reports/report.xml
-          reporter: junit
-
-
+          sourceDir: test
+#      - name: Download Go modules
+#        working-directory: test
+#        run: go mod download
+#      - name: Run tests
+#        working-directory: test
+#        run: go test -v -parallel 10 -timeout 120m | tee test_output.log
+#        env:
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+#          AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+#          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+#          AZURE_TENANT_ID: ${{ secrets.TENANT_ID }}
+#          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+#          AZURE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+#          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+#          AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
