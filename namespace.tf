@@ -9,7 +9,8 @@ resource "azurerm_eventhub_namespace" "ehn" {
   capacity                 = var.capacity
 
   identity {
-    type = "SystemAssigned"
+    type         = var.user_assigned_ids != null ? "SystemAssigned, UserAssigned" : "SystemAssigned"
+    identity_ids = var.user_assigned_ids
   }
 
   dynamic "network_rulesets" {

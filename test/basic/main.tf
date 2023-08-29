@@ -34,6 +34,13 @@ module "namespace" {
   capacity            = var.capacity
 
   authorized_ips_or_cidr_blocks = ["103.59.73.0/24"]
+
+  hubs = [
+    {
+      partitions        = 5
+      message_retention = 2
+    }
+  ]
 }
 
 output "name" {

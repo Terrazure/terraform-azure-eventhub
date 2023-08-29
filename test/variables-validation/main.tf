@@ -10,6 +10,14 @@ variable "capacity" {
   type    = number
   default = 2
 }
+variable "partitions" {
+  type    = number
+  default = 2
+}
+variable "retention" {
+  type    = number
+  default = 2
+}
 
 locals {
   location = "eastus"
@@ -28,6 +36,13 @@ module "namespace" {
   workload_name       = "test-ns"
   sku                 = var.sku
   capacity            = var.capacity
+
+  hubs = [
+    {
+      partitions        = var.partitions
+      message_retention = var.retention
+    }
+  ]
 
   authorized_ips_or_cidr_blocks = ["103.59.73.0/24"]
 }

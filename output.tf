@@ -10,7 +10,7 @@ output "name" {
 
 output "identity" {
   description = "The EventHub Namespace SystemAssigned managed identity principal id."
-  value       = azurerm_eventhub_namespace.ehn.identity[*].principal_id
+  value       = azurerm_eventhub_namespace.ehn.identity[0].principal_id
 }
 
 output "default_primary_connection_string" {

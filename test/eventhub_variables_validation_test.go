@@ -97,3 +97,69 @@ func TestEHNCapacityValidation(t *testing.T) {
 		})
 	}
 }
+
+func TestEHNPartitionsValidation(t *testing.T) {
+	t.Parallel()
+	expectedErrorMessage := "Invalid number of partitions."
+	testCases := []VariableTestCase{
+		{variableValue: -1, errorExpected: true},
+		{variableValue: 0, errorExpected: true},
+		{variableValue: 1000, errorExpected: true},
+		{variableValue: 18, errorExpected: false},
+		{variableValue: 33, errorExpected: true},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(fmt.Sprintf("Partitions-'%v'", testCase.variableValue), func(subTest *testing.T) {
+			testCase := testCase
+			subTest.Parallel()
+
+			terraformDir := test_structure.CopyTerraformFolderToTemp(t, "..", "/test/variables-validation")
+			tempRootFolderPath, _ := filepath.Abs(filepath.Join(terraformDir, "../../.."))
+			defer os.RemoveAll(tempRootFolderPath)
+
+			options := &terraform.Options{
+				TerraformDir: terraformDir,
+				Vars: map[string]interface{}{
+					"partitions": testCase.variableValue,
+				},
+			}
+
+			_, err := terraform.InitAndPlanE(subTest, options)
+
+			verifyTestCase(subTest, err, testCase, expectedErrorMessage)
+		})
+	}
+}
+
+func TestEHNRetentionValidation(t *testing.T) {
+	t.Parallel()
+	expectedErrorMessage := "Invalid number message retention days."
+	testCases := []VariableTestCase{
+		{variableValue: -1, errorExpected: true},
+		{variableValue: 0, errorExpected: true},
+		{variableValue: 6, errorExpected: false},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(fmt.Sprintf("Retention-'%v'", testCase.variableValue), func(subTest *testing.T) {
+			testCase := testCase
+			subTest.Parallel()
+
+			terraformDir := test_structure.CopyTerraformFolderToTemp(t, "..", "/test/variables-validation")
+			tempRootFolderPath, _ := filepath.Abs(filepath.Join(terraformDir, "../../.."))
+			defer os.RemoveAll(tempRootFolderPath)
+
+			options := &terraform.Options{
+				TerraformDir: terraformDir,
+				Vars: map[string]interface{}{
+					"retention": testCase.variableValue,
+				},
+			}
+
+			_, err := terraform.InitAndPlanE(subTest, options)
+
+			verifyTestCase(subTest, err, testCase, expectedErrorMessage)
+		})
+	}
+}
