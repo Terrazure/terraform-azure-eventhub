@@ -2,11 +2,6 @@ name: 'Terraform Unit Tests'
 
 on: workflow_dispatch
 
-env:
-  ARM_CLIENT_ID: "${{ secrets.CLIENT_ID }}"
-  ARM_SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
-  ARM_TENANT_ID: "${{ secrets.TENANT_ID }}"
-
 jobs:
   terraform-unit-tests:
     name: 'Terraform Unit Tests'
@@ -57,15 +52,15 @@ jobs:
     - name: Download Go Modules
       working-directory: test
       run: go mod download
-    - name: 'Az CLI login'
-      uses: azure/login@v1.4.3
-      with:
-        client-id: ${{ secrets.CLIENT_ID }}
-        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-        tenant-id: ${{ secrets.TENANT_ID }}
-        enable-AzPSSession: false
-        environment: azurecloud
-        audience: api://AzureADTokenExchange
     - name: Run Go Tests
       working-directory: test
       run: go test -v -parallel 10 -timeout 120m
+      env:
+        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+        AZURE_TENANT_ID: ${{ secrets.TENANT_ID }}
+        ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
