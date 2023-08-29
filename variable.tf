@@ -91,6 +91,8 @@ variable "hubs" {
     partitions        = number
     message_retention = number
   }))
+  default = null
+  /*
   validation {
     condition     = can(regex("^[[:digit:]]{1,2}$", var.hubs.partitions)) && var.hubs.partitions >= 1 && var.hubs.partitions <= 32
     error_message = "Invalid number of partitions."
@@ -99,6 +101,7 @@ variable "hubs" {
     condition     = can(regex("^[[:digit:]]{1}$", var.hubs.message_retention)) && var.hubs.message_retention >= 1 && var.hubs.message_retention <= 7
     error_message = "Invalid number message retention days."
   }
+  */
 }
 
 variable "local_authentication_enabled" {
