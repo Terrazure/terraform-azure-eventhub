@@ -36,4 +36,15 @@ module "secondary_namespace" {
 
   authorized_ips_or_cidr_blocks = ["103.59.73.254"]
   authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]
+
+  hubs = [
+    {
+      partitions        = 5
+      message_retention = 2
+    },
+    {
+      partitions        = 8
+      message_retention = 1
+    },
+  ]
 }
