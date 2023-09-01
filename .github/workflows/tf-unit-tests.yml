@@ -30,12 +30,13 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check -recursive
 
-#    # Perform a security scan of the terraform code using checkov
-#    - name: Run Checkov action
-#      id: checkov
-#      uses: bridgecrewio/checkov-action@master
-#      with:
-#        framework: terraform
+    # Perform a security scan of the terraform code using checkov
+    - name: Run Checkov action
+      id: checkov
+      continue-on-error: true
+      uses: bridgecrewio/checkov-action@master
+      with:
+        framework: terraform
 
 #    # Upload results to GitHub Advanced Security
 #    - name: Upload SARIF file
