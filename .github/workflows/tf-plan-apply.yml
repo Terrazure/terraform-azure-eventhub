@@ -17,7 +17,7 @@ env:
 jobs:
   terraform-plan:
     name: 'Terraform Plan'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: Azure
     defaults:
       run:
