@@ -104,12 +104,6 @@ variable "hubs" {
   */
 }
 
-variable "local_authentication_enabled" {
-  type        = bool
-  description = "Is SAS authentication enabled for the EventHub Namespace? Defaults to 'false'."
-  default     = false
-}
-
 variable "user_assigned_ids" {
   type        = list(string)
   description = "The name of user assigned managed Identity to access KeyVault secrets. \n Kindly note that the identity must be assigned to the application/database/cache in the identity block."
