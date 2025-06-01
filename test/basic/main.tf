@@ -36,7 +36,7 @@ module "namespace" {
   hubs = [
     {
       partitions        = 5
-      message_retention = 2
+      message_retention = 1
     }
   ]
 }
