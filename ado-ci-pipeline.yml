@@ -1,0 +1,29 @@
+# https://aka.ms/yaml
+trigger: none
+
+parameters:
+  - name: terraformVersion
+    displayName: Terraform version (default 1.3.0)
+    type: string
+    values:
+      - 1.3.0
+    default: 1.3.0
+
+  - name: testsArray
+    type: object
+    default:
+      - eventhub_basic_features
+      - eventhub_variables_validation
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Terrazure
+      ref: refactor_testcase
+
+jobs:
+  - template: ci-pipeline-template.yaml@templates
+    parameters:
+      terraformVersion: ${{ parameters.terraformVersion }}
+      testsArray: ${{parameters.testsArray}}
