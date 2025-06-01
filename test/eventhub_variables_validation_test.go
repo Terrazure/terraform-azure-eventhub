@@ -32,7 +32,7 @@ func verifyTestCase(t *testing.T, err error, testCase VariableTestCase, errorMes
 
 func TestEHNSkuValidation(t *testing.T) {
 	t.Parallel()
-	expectedErrorMessage := "Invalid sku. Valid options for sku are Basic or Standard."
+	expectedErrorMessage := "Invalid sku. Valid options for sku are 'Basic', 'Standard' or 'Premium'."
 	testCases := []VariableTestCase{
 		{variableValue: "Premmium", errorExpected: true},
 		{variableValue: "Basic", errorExpected: false},
