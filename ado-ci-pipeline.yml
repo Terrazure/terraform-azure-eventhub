@@ -23,7 +23,9 @@ resources:
       ref: refactor_testcase
 
 jobs:
-  - template: ci-pipeline-template.yml@templates
-    parameters:
-      terraformVersion: ${{ parameters.terraformVersion }}
-      testsArray: ${{parameters.testsArray}}
+  - template: security-pipeline-template.yml@templates
+
+#  - template: ci-pipeline-template.yml@templates
+#    parameters:
+#      terraformVersion: ${{ parameters.terraformVersion }}
+#      testsArray: ${{parameters.testsArray}}
