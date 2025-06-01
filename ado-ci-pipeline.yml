@@ -25,7 +25,7 @@ resources:
 jobs:
   - template: security-pipeline-template.yml@templates
 
-#  - template: ci-pipeline-template.yml@templates
-#    parameters:
-#      terraformVersion: ${{ parameters.terraformVersion }}
-#      testsArray: ${{parameters.testsArray}}
+  - template: ci-pipeline-template.yml@templates
+    parameters:
+      terraformVersion: ${{ parameters.terraformVersion }}
+      testsArray: ${{parameters.testsArray}}
