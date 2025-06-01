@@ -8,4 +8,3 @@ resource "azurerm_eventhub_namespace_disaster_recovery_config" "this" {
 
   depends_on = [azurerm_eventhub_namespace.ehn]
 }
-
