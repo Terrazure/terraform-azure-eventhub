@@ -5,7 +5,6 @@ resource "azurerm_eventhub_namespace" "ehn" {
   sku                      = var.sku
   auto_inflate_enabled     = local.auto_inflate_enabled
   maximum_throughput_units = var.maximum_throughput_units
-  zone_redundant           = local.redundancy
   capacity                 = var.capacity
 
   identity {

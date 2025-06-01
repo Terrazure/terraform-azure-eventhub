@@ -13,15 +13,14 @@ import (
 type EventHubtBasicTestCase struct {
 	capacity        int
 	sku             string
-	isZoneRedundant bool
 }
 
 func TestBasicConfiguration(t *testing.T) {
 	t.Parallel()
 
 	testCases := []EventHubtBasicTestCase{
-		{isZoneRedundant: false, sku: "Basic", capacity: 6},
-		{isZoneRedundant: true, sku: "Standard", capacity: 1},
+		{sku: "Basic", capacity: 6},
+		{sku: "Standard", capacity: 1},
 	}
 
 	for testCaseIndex, testCase := range testCases {
@@ -41,7 +40,6 @@ func TestBasicConfiguration(t *testing.T) {
 					TerraformDir: parallelTerraformDir,
 					Vars: map[string]interface{}{
 						"capacity":       testCase.capacity,
-						"zone_redundant": testCase.isZoneRedundant,
 						"sku":            testCase.sku,
 					},
 				}
@@ -55,7 +53,6 @@ func TestBasicConfiguration(t *testing.T) {
 
 				assert.Equal(t, name, *namespace.Name)
 				assert.Equal(t, testCase.sku, string(namespace.Sku.Name))
-				assert.Equal(t, testCase.isZoneRedundant, *namespace.ZoneRedundant)
 				assert.Equal(t, testCase.capacity, int(*namespace.Sku.Capacity))
 			})
 	}
