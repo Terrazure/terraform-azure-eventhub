@@ -19,7 +19,7 @@ resources:
   repositories:
     - repository: templates
       type: git
-      name: Terrazure
+      name: terrazure
       ref: refactor_testcase
 
 jobs:

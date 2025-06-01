@@ -98,7 +98,6 @@ func TestEHNCapacityValidation(t *testing.T) {
 	}
 }
 
-/*
 func TestEHNPartitionsValidation(t *testing.T) {
 	t.Parallel()
 	expectedErrorMessage := "Invalid number of partitions."
@@ -164,4 +163,3 @@ func TestEHNRetentionValidation(t *testing.T) {
 		})
 	}
 }
-*/
