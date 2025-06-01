@@ -1,5 +1,5 @@
 resource "azurerm_eventhub_namespace_disaster_recovery_config" "this" {
-  count = var.disaster_recovery_config.dr_enabled && var.sku == "Standard" ? 1 : 0
+  count = var.disaster_recovery_config.dr_enabled && var.sku != "Basic" ? 1 : 0
 
   name                 = module.naming.eventhub_namespace_disaster_recovery_config
   resource_group_name  = var.resource_group_name
@@ -8,4 +8,3 @@ resource "azurerm_eventhub_namespace_disaster_recovery_config" "this" {
 
   depends_on = [azurerm_eventhub_namespace.ehn]
 }
-

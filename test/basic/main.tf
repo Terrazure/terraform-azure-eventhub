@@ -4,7 +4,6 @@ provider "azurerm" {
 
 variable "sku" { type = string }
 variable "capacity" { type = number }
-variable "zone_redundant" { type = bool }
 
 locals {
   location = "eastus"
@@ -30,10 +29,16 @@ module "namespace" {
   resource_group_name = azurerm_resource_group.group.name
   workload_name       = random_string.workload_name.result
   sku                 = var.sku
-  zone_redundant      = var.zone_redundant
   capacity            = var.capacity
 
   authorized_ips_or_cidr_blocks = ["103.59.73.0/24"]
+
+  hubs = [
+    {
+      partitions        = 5
+      message_retention = 1
+    }
+  ]
 }
 
 output "name" {

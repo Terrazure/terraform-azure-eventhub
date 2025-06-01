@@ -15,10 +15,10 @@ variable "workload_name" {
 
 variable "sku" {
   type        = string
-  description = "Defines which tier to use. Valid options are Basic or Standard."
+  description = "Defines which tier to use. Valid options are 'Basic', 'Standard' or 'Premium'."
   validation {
-    condition     = (var.sku == "Basic" || var.sku == "Standard")
-    error_message = "Invalid sku. Valid options for sku are Basic or Standard."
+    condition     = (var.sku == "Basic" || var.sku == "Standard" || var.sku == "Premium")
+    error_message = "Invalid sku. Valid options for sku are 'Basic', 'Standard' or 'Premium'."
   }
 }
 
@@ -86,10 +86,27 @@ variable "tags" {
 }
 
 variable "hubs" {
-  description = "A list of event hubs to add to the namespace."
+  description = "A list of event hubs to add to the namespace. This block requires the following inputs:\n - `partitions` Specifies the current number of shards on the Event Hub. Valid values are from 1 to 32. The value cannot be changed unless Eventhub Namespace SKU is Premium. - `message_retention` Specifies the number of days to retain the events for this Event Hub. Valid values are from 1 to 7."
   type = list(object({
     partitions        = number
     message_retention = number
   }))
-  default = []
+  default = null
+  /*
+  validation {
+    condition     = can(regex("^[[:digit:]]{1,2}$", var.hubs.partitions)) && var.hubs.partitions >= 1 && var.hubs.partitions <= 32
+    error_message = "Invalid number of partitions."
+  }
+  validation {
+    condition     = can(regex("^[[:digit:]]{1}$", var.hubs.message_retention)) && var.hubs.message_retention >= 1 && var.hubs.message_retention <= 7
+    error_message = "Invalid number message retention days."
+  }
+  */
 }
+
+variable "user_assigned_ids" {
+  type        = list(string)
+  description = "The name of user assigned managed Identity to access KeyVault secrets. \n Kindly note that the identity must be assigned to the application/database/cache in the identity block."
+  default     = null
+}
+

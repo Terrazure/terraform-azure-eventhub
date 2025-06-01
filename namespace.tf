@@ -5,11 +5,11 @@ resource "azurerm_eventhub_namespace" "ehn" {
   sku                      = var.sku
   auto_inflate_enabled     = local.auto_inflate_enabled
   maximum_throughput_units = var.maximum_throughput_units
-  zone_redundant           = local.redundancy
   capacity                 = var.capacity
 
   identity {
-    type = "SystemAssigned"
+    type         = var.user_assigned_ids != null ? "SystemAssigned, UserAssigned" : "SystemAssigned"
+    identity_ids = var.user_assigned_ids
   }
 
   dynamic "network_rulesets" {
