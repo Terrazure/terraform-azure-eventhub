@@ -1,3 +1,3 @@
 locals {
-  primary_location   = "eastus"
+  primary_location = "eastus"
 }
