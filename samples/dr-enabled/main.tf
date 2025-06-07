@@ -5,7 +5,7 @@ module "primary_namespace" {
   resource_group_name = azurerm_resource_group.group.name
   workload_name       = "primary-ns"
   sku                 = "Standard"
-  capacity            = 15
+  capacity            = 2
 
   authorized_ips_or_cidr_blocks = ["103.59.73.254"]
   authorized_vnet_subnet_ids    = [azurerm_subnet.snet.id]

@@ -1,6 +1,9 @@
 name: 'Terraform Plan/Apply'
 
-on: workflow_dispatch
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 #Special permissions required for OIDC authentication
 permissions:
