@@ -1,4 +1,3 @@
 locals {
-  primary_location   = "eastus"
-  secondary_location = "westeurope"
+  primary_location = "eastus"
 }
