@@ -20,7 +20,6 @@ resources:
     - repository: templates
       type: git
       name: terrazure
-      ref: refactor_testcase
 
 jobs:
   - template: security-pipeline-template.yml@templates

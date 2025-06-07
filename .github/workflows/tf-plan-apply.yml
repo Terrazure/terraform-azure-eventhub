@@ -1,6 +1,9 @@
 name: 'Terraform Plan/Apply'
 
-on: workflow_dispatch
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 #Special permissions required for OIDC authentication
 permissions:
@@ -115,13 +118,12 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const { context } = require('@actions/github');
           const body = process.env.SUMMARY || 'No summary found.';
           await github.rest.issues.createComment({
-            issue_number: context.payload.pull_request.number,
+            issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: body
+            body
           });
                 
   terraform-apply:
