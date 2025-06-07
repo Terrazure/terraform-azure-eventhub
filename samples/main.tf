@@ -4,7 +4,7 @@ module "primary_namespace" {
   location            = local.primary_location
   resource_group_name = azurerm_resource_group.group.name
   workload_name       = "primary-ns"
-  sku                 = "Premium"
+  sku                 = "Standard"
   capacity            = 16
 
   authorized_ips_or_cidr_blocks = ["103.59.73.254"]

@@ -88,6 +88,7 @@ variable "tags" {
 variable "hubs" {
   description = "A list of event hubs to add to the namespace. This block requires the following inputs:\n - `partitions` Specifies the current number of shards on the Event Hub. Valid values are from 1 to 32. The value cannot be changed unless Eventhub Namespace SKU is Premium. - `message_retention` Specifies the number of days to retain the events for this Event Hub. Valid values are from 1 to 7."
   type = list(object({
+    name_suffix       = optional(string)
     partitions        = number
     message_retention = number
   }))
