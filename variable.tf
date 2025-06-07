@@ -24,10 +24,10 @@ variable "sku" {
 
 variable "capacity" {
   type        = number
-  description = "Specifies the Capacity / Throughput Units. Maximum value could be 20."
+  description = "Specifies the Capacity / Throughput Units. Maximum value could be 20, but can be increased in blocks of 2"
   validation {
     condition     = var.capacity >= 1 && var.capacity <= 20
-    error_message = "The Capacity of the Eventhub Namespace must be between 1 and 20, but can be increased in blocks of 2"
+    error_message = "The Capacity of the Eventhub Namespace must be between 1 and 20."
   }
 }
 
